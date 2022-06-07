@@ -1,0 +1,39 @@
+class Solution {
+    public long ans = 0;
+	public void countInversions(int arr[],int start,int end){
+		//Base Case
+		if(start >= end) return;
+		int mid = (start+end)>>1;
+		countInversions(arr,start,mid);
+		countInversions(arr,mid+1,end);
+		int [] helper = new int[end-start+1];
+		int p1 = start,p2=mid+1,p3 = 0;
+		while(p1<=mid && p2 <= end){
+			if(arr[p1]<=arr[p2]){
+				helper[p3++] = arr[p1++];
+			}
+			else{
+				ans += (mid-p1+1);//If arr[p1] is greater then all elements from p1 to mid will be greater due to merge sort technique
+				helper[p3++] = arr[p2++];
+			}
+		}
+		while(p1<=mid)helper[p3++] = arr[p1++];
+		while(p2<=end)helper[p3++] = arr[p2++];
+		for(int i = start ; i<=end ; ++i){
+			arr[i] = helper[i-start];
+		}
+	}
+    public long getInversions(int arr[], int n) {
+        // Write your code here.
+		countInversions(arr,0,n-1);
+		return ans;
+    }
+    public boolean isIdealPermutation(int[] nums) {
+        long localInversions = 0;
+        for(int i = 1 ; i < nums.length ; ++i){
+            if(nums[i-1] > nums[i]) localInversions++;
+        }
+        long globalInversions = getInversions(nums,nums.length);
+        return localInversions == globalInversions ? true : false;
+    }
+}
