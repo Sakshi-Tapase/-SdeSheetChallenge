@@ -1,0 +1,42 @@
+class Solution {
+    public int reversePairs(int[] nums) {
+        int len = nums.length;
+        if (len <= 1) {
+            return 0;
+        }
+        int[] left = Arrays.copyOf(nums, len / 2);
+        int[] right = Arrays.copyOfRange(nums, len / 2, len);
+        int res = 0;
+        res += reversePairs(left);
+        res += reversePairs(right);
+        //check whether there is pairs
+        Arrays.sort(right);
+        for (int i : left) {
+            res += binaryFindSmallerThan(right, Double.valueOf(i) / 2);
+        }
+        return res;
+    }
+
+    private int binaryFindSmallerThan(int[] arr, double target) {
+        int left = 0;
+        int right = arr.length - 1;
+        int lastIndex = -1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (Double.valueOf(arr[mid]) >= target) {
+                right = mid - 1;
+            } else {
+                lastIndex = mid;
+                left = mid + 1;
+            }
+        }
+        if (right < 0) {
+            return 0;
+        }
+        if (left > arr.length - 1) {
+            return arr.length;
+        }
+        return lastIndex + 1;
+    }
+
+}
