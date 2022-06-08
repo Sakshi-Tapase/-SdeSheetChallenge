@@ -1,0 +1,47 @@
+class Solution {
+    public List<Integer> majorityElement(int[] nums) {
+        int num1 = Integer.MAX_VALUE;
+        int num2 = Integer.MAX_VALUE;
+        int c1 = 0;
+        int c2 = 0;
+        for (int num: nums){
+            if (num == num1){
+                c1++;
+            }
+            else if (num == num2){
+                c2++;
+            }
+            else if (c1 == 0){
+                num1 = num;
+                c1++;
+            }
+            else if (c2 == 0){
+                num2 = num;
+                c2++;
+            }
+            else{
+                c1--;
+                c2--;
+            }
+        }
+        int count1 = 0;
+        int count2 = 0;
+        for (int num: nums){
+            if (num == num1){
+                count1++;
+            }
+            if (num == num2){
+                count2++;
+            }
+        }
+        System.out.println(num1 + " " + count1 + " " + num2 + " " + count2);
+        List<Integer> sol = new ArrayList<>();
+        if (count1 > nums.length/3){
+            sol.add(num1);
+        }
+        if (count2 > nums.length/3){
+            sol.add(num2);
+        }
+        return sol;
+    }
+}
