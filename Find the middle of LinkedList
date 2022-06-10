@@ -1,0 +1,24 @@
+class Solution {
+    public ListNode middleNode(ListNode head) {
+       
+    
+        if(head.next == null)
+            return head;
+        
+        ListNode temp = head;
+        
+        int c = 0;
+        while(temp!=null)
+        {
+            c += 1;
+            temp = temp.next;
+        }
+        
+        temp = head;
+        c = c/2;
+        while(c-->0)
+            temp = temp.next;
+        
+        return temp;
+    }
+} 
