@@ -1,0 +1,24 @@
+public class Solution {
+   public ListNode detectCycle(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        ListNode node = head;
+        Map<Integer, ListNode> idxNode = new HashMap<>();
+        int idx = 0;
+        while (node != null) {
+            int nodeValue = node.val;
+            if (nodeValue != 10001) {
+				// 10001 for visited
+                node.val = 10001;
+                idxNode.put(idx, node);
+            } else {
+                return node;
+            }
+            idx++;
+            node = node.next;
+        }
+        return null;
+    }
+
+}
